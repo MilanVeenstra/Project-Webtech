@@ -1,0 +1,12 @@
+body{
+  height: 100vh;
+  width: 100vw;
+  background-image:url('/static/images/tree.jpg');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+.nav-wrapper{
+  backdrop-filter: blur(40px);
+  width: 100%;
+  height: 40px;
+}
