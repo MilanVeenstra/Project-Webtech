@@ -1,12 +1,15 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+import os
 from os import path
+
 db = SQLAlchemy()
 DB_NAME = "database.db"
+basedir = os.path.abspath(os.path.dirname(__file__))
 def create_app():
     app = Flask(__name__)
     app.config['SECRET_KEY'] = 'iHCWpiKhkFfzr3slCNNSPYknEJOyXQtVl4h8HggP'
-    app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///" + DB_NAME
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, DB_NAME)
     db.init_app(app)
 
     from .views import views
@@ -21,7 +24,7 @@ def create_app():
     return app
 
 def create_database(app):
-    if not path.exists('/' + DB_NAME):
+    if not path.exists('website/' + DB_NAME):
         with app.app_context():
             db.create_all()
-        print('---- created database ----')
+            print('---- created database ----')

@@ -28,7 +28,7 @@
     {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
             {% for message in messages %}
-                {% if category == 'error' %}
+                {% if message[0] == 'error' %}
                     <div class="alert alert-danger alert-dismissable fade show" role="alert">
                         {{ message[1] }}
                         <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span>

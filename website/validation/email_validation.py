@@ -6,6 +6,6 @@ class EmailValidator:
     def validate_email(self):
         email_regex = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
         if re.match(email_regex, self.email):
-            return True
+            return self.email
         else:
             return False
