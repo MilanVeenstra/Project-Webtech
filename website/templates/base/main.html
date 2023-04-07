@@ -20,7 +20,11 @@
         <ul>
             <li><a class="nav-link" href="/posts">POSTS</a></li>
             <li><a class="nav-link" href="/about_us">ABOUT US</a></li>
-            <li><a class="nav-link" href="/login">LOGIN IN</a></li>
+            {% if user.is_authenticated %}
+                <li><a class="nav-link" href="/logout">LOGOUT</a></li>
+            {% else %}
+                <li><a class="nav-link" href="/login">LOGIN IN</a></li>
+            {% endif %}
         </ul>
     </div>
 </div>

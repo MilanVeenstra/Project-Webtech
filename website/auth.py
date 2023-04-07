@@ -3,6 +3,7 @@ from website.validation.email_validation import EmailValidator
 from .models import User
 from werkzeug.security import generate_password_hash, check_password_hash
 from . import db
+from flask_login import login_user, login_required, logout_user, current_user
 
 auth = Blueprint('auth', __name__)
 
@@ -16,9 +17,11 @@ def login():
         password = request.form.get('password')
 
         user = User.query.filter_by(email=email).first()
+
         if user:
             if check_password_hash(user.password, password):
                 flash('Loggid in!', category='succes')
+                login_user(user, remember=True)
                 return redirect(url_for('views.home'))
             else:
                 flash('incorrect password, try again.', category='error')
@@ -27,11 +30,13 @@ def login():
 
 
 
-    return render_template("login.html", title=title, css_route=css_route)
+    return render_template("login.html", title=title, css_route=css_route, user=current_user)
 
 @auth.route('/logout')
+@login_required
 def logout():
-    return "<h1>Logout</h1>"
+    logout_user()
+    return redirect(url_for('auth.login'))
 
 @auth.route('/sign_up', methods=['GET', 'POST'])
 def sign_up():
@@ -58,8 +63,9 @@ def sign_up():
             new_user = User(email=email, username=username, password=generate_password_hash(password, method='sha256'))
             db.session.add(new_user)
             db.session.commit()
+            login_user(user, remember=True)
             # flash('Signed up!', category='succes')
             return redirect(url_for('views.home'))
 
-    return render_template("sign_up.html", title=title, css_route=css_route)
+    return render_template("sign_up.html", title=title, css_route=css_route, user=current_user)
 
