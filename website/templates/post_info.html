@@ -1,13 +1,21 @@
 {% extends 'base/main.html' %}
 
 
-
 {% block body %}
-    <h1>{{ post_info.post_title }}</h1>
+<h1>{{ post_info.post_title }}</h1>
+<div class="comments-container">
     {% if user.is_authenticated %}
-        <form method="post" action="/create-comment">
-            <input type="text" id="text" name="text" placeholder="Comment here!" autocomplete="off">
+        <form method="post" action="/create-comment/{{ post_info.post_id }}">
+            <input type="text" id="comment" name="comment" placeholder="Comment here!" autocomplete="off">
             <button type="submit" class="btn btn-primary">Comment</button>
         </form>
     {% endif %}
+    <div class="comment-section">
+        {% for comment in post_info.comments %}
+            {{ comment.users.username}}
+            {{ comment.comment_content }}
+        {% endfor %}
+    </div>
+</div>
+
 {% endblock %}

@@ -18,10 +18,10 @@ def posts():
     posts = Posts.query.all()
     return render_template("posts.html", title=title, css_route=css_route, user=current_user, posts=posts)
 
-@views.route('/post/<id>')
-def post_info(id):
+@views.route('/post/<post_id>')
+def post_info(post_id):
     css_route = "css/post_info.css"
-    post_info = Posts.query.filter_by(post_id=id).first()
+    post_info = Posts.query.filter_by(post_id=post_id).first()
     title = post_info.post_title
     return render_template("post_info.html", title=title, css_route=css_route, user=current_user, post_info=post_info)
 
@@ -67,7 +67,7 @@ def delete_post(id):
 
     return redirect(url_for('views.home'))
 
-@views.route('profile/<username>')
+@views.route('/profile/<username>')
 def profile(username):
     profile_info = Users.query.filter_by(username=username).first()
     profile_posts = Users.posts
@@ -77,3 +77,25 @@ def profile(username):
 
     return render_template("profile.html", title=title, css_route=css_route, user=current_user,
                            profile_info=profile_info, profile_posts=profile_posts)
+
+
+@views.route("/create-comment/<post_id>", methods=['GET', 'POST'])
+@login_required
+def create_comment(post_id):
+    comment = request.form.get('comment')
+
+    if not comment:
+        flash('Comment cannot be empty!', category='error')
+        return redirect(url_for('views.post_info', post_id=post_id))
+    else:
+        post = Posts.query.filter_by(post_id=post_id)
+        if post:
+            comment = Comments(comment_content=comment, user_id=current_user.id, post_id=post_id)
+            db.session.add(comment)
+            db.session.commit()
+            return redirect(url_for('views.post_info', post_id=post_id))
+        else:
+            flash('Post does not exists', category='error')
+            return redirect(url_for('views.posts'))
+
+
