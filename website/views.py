@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_login import login_required, current_user
 from . import db
-from .models import Post_Info
+from .models import Posts
 from website.validation.post_validation import PostValidator
 views = Blueprint('views', __name__)
 
@@ -31,11 +31,13 @@ def create_post():
 
         post = PostValidator(data)
 
-        if post:
-            new_post = Post_Info(user_id=current_user.id, post_title=post.validate_title(), post_content=data['post_content'])
+        if all(data.values()):
+            new_post = Posts(user_id=current_user.id, post_title=post.validate_title(), post_content=data['post_content'])
             db.session.add(new_post)
             db.session.commit()
             return redirect(url_for('views.home'))
+        else:
+            flash('title or message cannot be empty!', category='error')
 
 
     return render_template("create_post.html", title=title, css_route=css_route, user=current_user)
