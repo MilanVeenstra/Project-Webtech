@@ -12,6 +12,7 @@ class Users(db.Model, UserMixin):
     date = db.Column(db.DateTime(timezone=True), default=func.now())
     user_image = db.Column(db.Text)
     posts = db.relationship('Posts', backref='users', passive_deletes=True)
+    comments = db.relationship('Comments', backref='users', passive_deletes=True)
 
 class Posts(db.Model):
     __tablename__ = 'posts'
@@ -20,9 +21,10 @@ class Posts(db.Model):
     post_title = db.Column(db.String(150), nullable=False)
     post_content = db.Column(db.Text, nullable=False)
     date = db.Column(db.DateTime(timezone=True), default=func.now())
+    comments = db.relationship('Comments', backref='posts', passive_deletes=True)
 
-class Post_Comment(db.Model):
-    __tablename__ = 'post_comment'
+class Comments(db.Model):
+    __tablename__ = 'comments'
     comment_id = db.Column(db.Integer, primary_key=True)
     post_id = db.Column(db.Integer, db.ForeignKey('posts.post_id', ondelete="CASCADE"))
     user_id = db.Column(db.Integer, db.ForeignKey('users.id', ondelete="CASCADE"))

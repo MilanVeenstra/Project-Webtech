@@ -4,4 +4,17 @@
 
 {% block body %}
     <h1>Posts</h1>
-{%  endblock %}
+    <div id="posts">
+
+        {% for post in posts %}
+            <div class="card border-dark">
+                <a href="/post/{{ post.post_id }}">{{ post.post_title }}</a>
+                <a href="/profile/{{ post.users.username }}">{{ post.users.username }}</a>
+                {% if user.id == post.user_id %}
+                    <a href="/delete-post/{{ post.post_id }}" class="dropdown-item">Delete</a>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}
