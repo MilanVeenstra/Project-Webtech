@@ -9,7 +9,7 @@
 a {
   text-decoration: none !important; /* Remove default underline */
   border-bottom: none !important;
-  color: white !important;
+  color: grey !important;
 }
 
 body {
@@ -64,10 +64,10 @@ body {
 
   .main-container {
     display: flex;
-    flex-direction: row;
     margin: 50px 100px;
     padding: 15px;
     justify-content: center;
+    flex-direction: column;
   }
 
 }

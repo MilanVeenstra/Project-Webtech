@@ -11,6 +11,12 @@ def home():
     css_route = "css/home.css"
     return render_template("home.html", title=title, css_route=css_route, user=current_user)
 
+@views.route('/about-us')
+def about_us():
+    title = "About us"
+    css_route = "css/home.css"
+    return render_template("about_us.html", title=title, css_route=css_route, user=current_user)
+
 @views.route('/posts', methods=['GET', 'POST'])
 def posts():
     title = "Posts"

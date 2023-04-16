@@ -6,14 +6,15 @@
     <div class="box">
         <form method="POST">
             <div class="inputBox">
-                <label for="email">Email Address</label>
-                <input type="email" class="form-control" id="email" name="email">
+                <label>Email Address</label>
+                <input type="email" class="form-control" id="email" name="email" value="" onkeyup="this.setAttribute('value', this.value);">
             </div>
             <div class="inputBox">
-                <label for="password">Password</label>
-                <input type="password" class="form-control" id="password" name="password">
+                <label>Password</label>
+                <input type="password" class="form-control" id="password" name="password" value="" onkeyup="this.setAttribute('value', this.value);">
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
+            <a class="nav-link" href="/sign_up">No account, sign up!</a>
         </form>
     </div>
 {% endblock %}
