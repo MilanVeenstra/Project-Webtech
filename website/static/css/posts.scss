@@ -1,0 +1,10 @@
+.link-post, .post-item{
+  border: 2px solid white !important;
+  padding: 5px;
+  font-weight: bold;
+  color: white !important;
+}
+.post-item{
+  display: flex;
+  flex-direction: column;
+}

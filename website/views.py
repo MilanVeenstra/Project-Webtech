@@ -76,13 +76,12 @@ def delete_post(id):
 @views.route('/profile/<username>')
 def profile(username):
     profile_info = Users.query.filter_by(username=username).first()
-    profile_posts = Users.posts
 
-    title = profile_info.username.capitalize()
+    title = "Profile: " + profile_info.username.capitalize()
     css_route = "css/profile.css"
 
     return render_template("profile.html", title=title, css_route=css_route, user=current_user,
-                           profile_info=profile_info, profile_posts=profile_posts)
+                           profile_info=profile_info)
 
 
 @views.route("/create-comment/<post_id>", methods=['GET', 'POST'])

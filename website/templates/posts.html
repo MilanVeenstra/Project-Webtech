@@ -4,12 +4,13 @@
 
 {% block body %}
     <h1>Posts</h1>
+    <a class="link-post" href="/posts/create-post">CREATE POST</a>
     <div id="posts">
 
         {% for post in posts %}
-            <div class="card border-dark">
-                <a href="/post/{{ post.post_id }}">{{ post.post_title }}</a>
-                <a href="/profile/{{ post.users.username }}">{{ post.users.username }}</a>
+            <div class="post-item">
+                <a href="/post/{{ post.post_id }}">Title: {{ post.post_title }}</a>
+                <a href="/profile/{{ post.users.username }}">By user: {{ post.users.username }}</a>
                 {% if user.id == post.user_id %}
                     <a href="/delete-post/{{ post.post_id }}" class="dropdown-item">Delete</a>
                 {% endif %}

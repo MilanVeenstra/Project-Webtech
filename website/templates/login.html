@@ -3,18 +3,16 @@
 
 
 {% block body %}
-    <div class="box">
-        <form method="POST">
-            <div class="inputBox">
-                <label>Email Address</label>
-                <input type="email" class="form-control" id="email" name="email" value="" onkeyup="this.setAttribute('value', this.value);">
-            </div>
-            <div class="inputBox">
-                <label>Password</label>
-                <input type="password" class="form-control" id="password" name="password" value="" onkeyup="this.setAttribute('value', this.value);">
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-            <a class="nav-link" href="/sign_up">No account, sign up!</a>
-        </form>
-    </div>
+    <form method="POST">
+        <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" class="form-control" id="email" name="email">
+        </div>
+        <div class="form-group">
+            <label>Password</label>
+            <input type="password" class="form-control" id="password" name="password">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <a class="nav-link" href="/sign_up">No account, sign up!</a>
+    </form>
 {% endblock %}

@@ -3,5 +3,11 @@
 
 
 {% block body %}
-    <h1>HOI</h1>
-{%  endblock %}
+    <h1>Profile: {{ profile_info.username }}</h1>
+    <h2>User posts:</h2>
+    {% for post in profile_info.posts %}
+        <div class="post-item">
+            <a href="/post/{{ post.post_id }}">Title: {{ post.post_title }}</a>
+        </div>
+    {% endfor %}
+{% endblock %}
