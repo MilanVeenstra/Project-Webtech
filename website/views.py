@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_login import login_required, current_user
 from . import db
-from .models import Posts, Users, Comments
+from .models import Posts, Users, Comments, Likes
 from website.validation.post_validation import PostValidator
 views = Blueprint('views', __name__)
 
@@ -96,6 +96,25 @@ def create_comment(post_id):
             return redirect(url_for('views.post_info', post_id=post_id))
         else:
             flash('Post does not exists', category='error')
-            return redirect(url_for('views.posts'))
+
+@views.route("/posts/like-post/<post_id>", methods=['GET'])
+@login_required
+def like(post_id):
+    post = Posts.query.filter_by(post_id=post_id)
+    user_like = Likes.query.filter_by(user_id=current_user.id, post_id=post_id).first()
+
+    if not post:
+        flash('This post does not exists!', category='error')
+    elif user_like:
+        db.session.delete(user_like)
+        db.session.commit()
+    else:
+        like = Likes(user_id=current_user.id, post_id=post_id)
+        db.session.add(like)
+        db.session.commit()
+
+    return redirect(url_for('views.post_info', post_id=post_id))
+
+
 
 
